@@ -1,24 +1,37 @@
 import React, { Component } from 'react'
-import { Input } from 'antd';
+import { Input,Icon } from 'antd';
+import { search } from '../../../common/API'
+import Masks from '../../../Search/masks'
 const { Search } = Input;
-// import { search } from '../../../common/API'
 export default class Searchs extends Component {
-    // constructor(props){
-    //     super(props)
-    //     //console.log(props)
-    // }
-    // componentDidMount(){
-    //     this.$http.get(search).then(res=>{
-    //         console.log(res)
-    //     })
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+          
+            flag: false,
+            itemlist: []
+        }
+    }
+    search(value) {
+        console.log(value)
+        this.$http.get(search, {params: {
+            keyword: value
+        }}).then(res =>{
+            console.log(res)
+            // 打开flag
+            this.setState({
+                flag: true,
+                itemlist: res.data.data.song.itemlist
+            })
+        })
+    }
     render() {
         return (
-            <div>
+            <div className='soubox'>
                 <div className='sou'>
                     <Search
                         placeholder="搜索歌曲，歌单，专辑"
-                        onSearch={value => console.log(value)}
+                        onSearch={value =>this.search(value)}
                         style={{ width: 260 }}
                     />
                    <span>取消</span>               
@@ -32,6 +45,9 @@ export default class Searchs extends Component {
 
                     </div>
                 </div>
+                {
+                    this.state.flag ? <Masks list={this.state.itemlist}/> : ""
+                }
             </div>
         )
     }
