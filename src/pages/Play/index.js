@@ -4,7 +4,7 @@ import { Button, Icon } from 'antd'
 export default class Plays extends Component {
     constructor(props) {
         super(props)
-        console.log(this)
+        // console.log(this)
         this.state = {
             url: '',
             lyric: '',
