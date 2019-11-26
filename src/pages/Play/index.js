@@ -76,8 +76,12 @@ export default class Plays extends Component {
                 lyric: res.data.data.lyric
             })
             let lyric = res.data.data.lyric
+           // console.log(lyric)
             let lyricArr = lyric.split('[换行]').slice(5)
+           // console.log(lyricArr)
             let arr = []
+
+
             lyricArr.forEach((item, index) => {
                 let lstr = item.split(']')[1]
                 let ltime = item.split(']')[0].slice(1, 6)
@@ -90,8 +94,17 @@ export default class Plays extends Component {
                     lstr,
                     ltime: ltimeFormat(ltime)
                 }
+            
                 arr.push(obj)
+               
             })
+           console.log(arr)
+            arr= arr.filter(function(item,index){
+                return item.lstr!=''
+                //console.log(item.lstr)
+            })
+            console.log(arr)
+
             this.setState({
                 lyricArr: arr
             }, () => {
